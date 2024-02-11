@@ -5,12 +5,29 @@ from datetime import datetime
 from models.base_model import BaseModel
 import os
 import models
+from time import sleep
 
 
-class TestBaseModel(unittest.TestCase):
+class TestBaseModel_initiation(unittest.TestCase):
     """
-    Testng BaseModel
+    Testing the initiation of our BaseModel class
     """
+
+    def test_no_args(self):
+        """ testing when no args are initating"""
+        self.assertEqual(BaseModel, type(BaseModel()))
+
+    def test_id_is_public_and_string(self):
+        """is the id a public string"""
+        self.assertEqual(str, type(BaseModel().id))
+
+    def test_created_at_is_public_and_datetime(self):
+        """ is created_at public and with type datetime"""
+        self.assertEqual(datetime, type(BaseModel().created_at))
+
+    def test_updated_at_is_public_and_datetime(self):
+        """ is updated_at public and with type datetime"""
+        self.assertEqual(datetime, type(BaseModel().updated_at))
 
     def test_attributes(self):
         """
@@ -29,6 +46,20 @@ class TestBaseModel(unittest.TestCase):
         base_model_b = BaseModel()
         self.assertNotEqual(base_model_a.id, base_model_b.id)
 
+    def test_created_at_of_two_instances(self):
+        """ two BaseModel created in different time"""
+        falcon1 = BaseModel()
+        sleep(1)
+        falcon2 = BaseModel()
+        self.assertLess(falcon1.created_at, falcon2.created_at)
+
+    def test_updated_at_of_two_instances(self):
+        """two BaseModel created in different time"""
+        falcon1 = BaseModel()
+        sleep(1)
+        falcon2 = BaseModel()
+        self.assertLess(falcon1.updated_at, falcon2.updated_at)
+
     def test_str_representation(self):
         """
         testing string representation
@@ -36,6 +67,14 @@ class TestBaseModel(unittest.TestCase):
         base_model = BaseModel()
         expected = f"[BaseModel] ({base_model.id}) {base_model.__dict__}"
         self.assertEqual(str(base_model), expected)
+
+    def test_kwargs(self):
+        date = datetime.today()
+        date_iso = date.isoformat()
+        falcon = BaseModel(id ="11", created_at=date_iso, updated_at=date_iso)
+        self.assertEqual(falcon.id, "11")
+        self.assertEqual(falcon.created_at, date)
+        self.assertEqual(falcon.updated_at, date)
 
     def test_save_method(self):
         """
@@ -65,8 +104,8 @@ class TestBaseModel(unittest.TestCase):
         """
         data = {
             'id': 'some_id',
-            'created_at': '2022-01-01T12:00:00.000000',
-            'updated_at': '2022-01-01T13:00:00.000000'
+            'created_at': '2024-08-06T12:00:00.000000',
+            'updated_at': '2024-08-06T13:00:00.000000'
         }
         base_model = BaseModel(**data)
         self.assertEqual(base_model.id, data['id'])
