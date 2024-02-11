@@ -6,10 +6,16 @@ import cmd
 
 blueprint = {"BaseModel": BaseModel}
 
+
 class HBNBCommand(cmd.Cmd):
     """airBNB main command interpreter class"""
 
-    prompt = '(hbnb) '
+    prompt = "(hbnb) " if sys.__stdin__.isatty() else ""
+
+    def preloop(self):
+        """Prints when isatty is false"""
+        if not sys.__stdin__.isatty():
+            print('(hbnb)')
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -143,6 +149,6 @@ class HBNBCommand(cmd.Cmd):
         print("adding or updating attribute (saves changes to JSON file)")
         print("Usage: update <class name> <id> <att name> \"<att value>\"\n")
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
