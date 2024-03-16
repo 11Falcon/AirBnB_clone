@@ -1,0 +1,14 @@
+/* margin and padding*/
+body {
+        margin: 0;
+        padding: 0;
+}
+/* font styles */
+body{
+        color: #484848;
+        font-size: 14px;
+        font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+link[rel="icon"] {
+        background-image: url("images/logo.png");
+    }
